@@ -15,6 +15,7 @@ import java.util.List;
 
 //** UI layer는 사용자와 내부에 있는 로직및 도메인 모델들이 서로 상관없도록 디자인 **
 //우리가 이 파일을 컨트롤러라고 따로 만들지 않았지만 동작하는 이유
+@CrossOrigin    //CORS로 막힌 문제를 해결
 @RestController
 public class RestaurantController {
 
@@ -44,13 +45,26 @@ public class RestaurantController {
     // 응답을 할때 상태까지 함께 응답하기위해(200, 201같은) responseentity 사용
     public ResponseEntity<?> create(@RequestBody Restaurant resource)
             throws URISyntaxException {
-        String name = resource.getName();
-        String address = resource.getAddress();
 
-        Restaurant restaurant = new Restaurant(1234L, name, address);
-        restaurantService.addRestaurant(restaurant);
+        Restaurant restaurant = restaurantService.addRestaurant(
+                Restaurant.builder()
+                        .name(resource.getName())
+                        .address(resource.getAddress())
+                        .build());
 
         URI location = new URI("/restaurants/" + restaurant.getId());
         return ResponseEntity.created(location).body("{}");
+    }
+
+    @PatchMapping("/restaurants/{id}")
+    public String update(
+            @PathVariable("id") Long id, @RequestBody Restaurant resource){
+
+        String name = resource.getName();
+        String address= resource.getAddress();
+
+        restaurantService.updateRestaurant(id, name, address);
+
+        return "{}";
     }
 }
