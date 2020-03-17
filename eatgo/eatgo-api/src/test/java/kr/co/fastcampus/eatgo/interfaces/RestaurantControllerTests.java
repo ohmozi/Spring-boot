@@ -13,8 +13,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,7 +66,7 @@ class RestaurantControllerTests {
     }
 
     @Test
-    public void detail() throws Exception {
+    public void detailWithExisted() throws Exception {
         Restaurant restaurant1 = Restaurant.builder()
                 .id(1004L)
                 .name("Bob zip")
@@ -106,8 +106,23 @@ class RestaurantControllerTests {
                         containsString("\"name\":\"cyber food\"")
                 ));
     }
+
     @Test
-    public void create() throws Exception {
+    public void detailWithNotExisted() throws Exception {
+        given(restaurantService.getRestaurant(404L))
+                .willThrow(new RestaurantNotFoundException(404L));
+
+        mvc.perform(get("/restuarants/404"))
+                .andExpect(status().isNotFound());
+//                .andExpect(content().string("{}"));
+//        org.springframework.web.servlet.resource.ResourceHttpRequestHandler  를 통해서 따로 처리없이 바로 되는데..?
+//        Junit4 기준으로 RestaurantNotFoundException.java 파일 생성 및
+//        @ControllerAdvice를 활용한 RestaurantErrorAdivce.java생성을 통해 에러처리
+//        에러처리 없이 바로 돼서 < .andExpect(content().string("{}"));  >이 부분 처리가안됨  (강의내용대로라면 exception파일로 들어가야하는데..)
+    }
+
+    @Test
+    public void createWithValidData() throws Exception {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
                 Restaurant restaurant = invocation.getArgument(0);
                 return Restaurant.builder()
@@ -128,12 +143,38 @@ class RestaurantControllerTests {
     }
 
     @Test
-    public void update() throws Exception {
+    public void createWithInvalidData() throws Exception {
+
+        mvc.perform(post("/restaurants")
+                .contentType(MediaType.APPLICATION_JSON)        //컨텐트가 json타입이란것을 알려주기
+                .content("{\"name\":\"\",\"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    public void createWithoutNameData() throws Exception {
+
+        mvc.perform(post("/restaurants")
+                .contentType(MediaType.APPLICATION_JSON)        //컨텐트가 json타입이란것을 알려주기
+                .content("{\"name\":\"\",\"address\":\"Busan\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"jihun bar\", \"address\":\"gunpo\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L,"jihun bar","gunpo");
+    }
+
+    @Test
+    public void updateWithInvalidData() throws Exception {
+        mvc.perform(patch("/restaurants/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"\", \"address\":\"\"}"))
+                .andExpect(status().isBadRequest());
+
     }
 }
