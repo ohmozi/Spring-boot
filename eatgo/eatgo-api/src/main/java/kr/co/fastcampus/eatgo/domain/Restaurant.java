@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.beans.MutablePropertyValues;
 
@@ -33,7 +34,8 @@ public class Restaurant {
 //    위처럼 변수가 추가되고 여러개일때 get,set함수를 선언하지 않아도 되며 생성자에서 변수 순서 및 어떤 변수가 있는지를 명시해줄수있어
 //    Lombok이 사용된다
     @Transient      //임시로 통과하는 어노테이션
-    private List<MenuItem> menuItems = new ArrayList<MenuItem>();
+    @JsonInclude(JsonInclude.Include.NON_NULL)      //json이 null이 아닐때만 포함
+    private List<MenuItem> menuItems;
 
     public String getInformation() {        //인스턴스로 만들어진 애들은 자동으로 게터를 통해 생성
         return name + " in " + address;

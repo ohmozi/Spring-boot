@@ -1,9 +1,6 @@
 package kr.co.fastcampus.eatgo.application;
 
-import kr.co.fastcampus.eatgo.domain.MenuItem;
-import kr.co.fastcampus.eatgo.domain.MenuItemRepository;
-import kr.co.fastcampus.eatgo.domain.Restaurant;
-import kr.co.fastcampus.eatgo.domain.RestaurantRepository;
+import kr.co.fastcampus.eatgo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +26,8 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id){
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);     //optional 처리를 null로 하겠다.
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(()->new RestaurantNotFoundException(id));     //optional 처리를 null로 하겠다.
         // 실무에서는 이렇게하면 안됌. restuarant 객체가 null로 들어왔을때 에러처리가 안되어있음
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
@@ -40,6 +38,7 @@ public class RestaurantService {
 
     public Restaurant addRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);       //db에 반영
+        //생성할때는 꼭 save인가?
     }
 
     @Transactional  //이 안에서 벗어날때 db에 적용이된다.     위에서는 save를 해서 반영했음.

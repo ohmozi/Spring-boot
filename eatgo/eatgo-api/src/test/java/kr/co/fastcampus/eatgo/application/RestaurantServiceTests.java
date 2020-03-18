@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo.application;
 
+import jdk.vm.ci.code.site.ExceptionHandler;
 import kr.co.fastcampus.eatgo.domain.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,13 +82,26 @@ class RestaurantServiceTests {
     }
 
     @Test
-    public void getRestaurant(){
+    public void getRestaurantWithExisted(){
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
 
         assertThat(restaurant.getId(), is(1004L));
         MenuItem menuItem = restaurant.getMenuItems().get(0);
         assertThat(menuItem.getName(), is("Kimchi"));
     }
+
+    @Test
+    public void getRestauranNottWithExisted(){
+        Exception exception = assertThrows(RestaurantNotFoundException.class, () ->{
+            restaurantService.getRestaurant(404L);
+        });
+    }
+
+//    Junit4 에서는 아래 방식으로 표현이 가능하다.
+//    @Test(expected = RestaurantNotFoundException.class)
+//    public void getRestauranNottWithExisted(){
+//        restaurantService.getRestaurant(404L);
+//    }
 
     @Test
     public void addRestaurant(){
