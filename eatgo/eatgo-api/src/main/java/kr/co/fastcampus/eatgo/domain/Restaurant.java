@@ -37,18 +37,31 @@ public class Restaurant {
     @JsonInclude(JsonInclude.Include.NON_NULL)      //json이 null이 아닐때만 포함
     private List<MenuItem> menuItems;
 
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Review> reviews;
+
+
     public String getInformation() {        //인스턴스로 만들어진 애들은 자동으로 게터를 통해 생성
         return name + " in " + address;
-    }
-
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = new ArrayList<>(menuItems);
     }
 
     public void updateInformation(String name, String address) {
         this.name = name;
         this.address =address;
     }
+    public void addMenuItem(MenuItem menuItem) {
+        menuItems.add(menuItem);
+    }
+
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = new ArrayList<>(menuItems);
+    }
+
+    public void setRevies(List<Review> reviews) {
+        this.reviews = new ArrayList<>(reviews);
+    }
+
 //    public Restaurant(String name, String address) {
 //        this.name = name;
 //        this.address = address;
@@ -77,7 +90,4 @@ public class Restaurant {
 //    public List<MenuItem> getMenuItems(){
 //        return menuItems;
 //    }
-    public void addMenuItem(MenuItem menuItem) {
-        menuItems.add(menuItem);
-    }
 }

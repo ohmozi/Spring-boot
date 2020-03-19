@@ -16,7 +16,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 class RestaurantServiceTests {
     private RestaurantService restaurantService;
@@ -26,6 +28,8 @@ class RestaurantServiceTests {
     private RestaurantRepository restaurantRepository;
     @Mock
     private MenuItemRepository menuItemRepository;
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @BeforeEach     //Junit4에서 Before과 동일
     //모든테스트가 실행되기전에 실행하고 가기
@@ -35,10 +39,12 @@ class RestaurantServiceTests {
 //        menuItemRepository = new MenuItemRepositoryImpl();
         mockRestuarantRepository();
         mockMenuItemRepository();
+        mockReivewRepository();
 
         restaurantService = new RestaurantService(
-                restaurantRepository, menuItemRepository);        //서비스에서 사용할 레포를 넣어줘야한다
+                restaurantRepository, menuItemRepository, reviewRepository);        //서비스에서 사용할 레포를 넣어줘야한다
     }
+
 
     private void mockMenuItemRepository() {
         List<MenuItem> menuItems = new ArrayList<>();
@@ -73,11 +79,24 @@ class RestaurantServiceTests {
 
     }
 
+    private void mockReivewRepository() {
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(Review.builder()
+                        .name("jusnag")
+                        .score(1)
+                        .description("bad")
+                        .build());
+
+        given(reviewRepository.findAllByRestaurantId(1004L))
+                .willReturn(reviews);
+    }
+
     @Test
     public void getRestaurants(){
         List<Restaurant> restaurants = restaurantService.getRestaurants();
 
         Restaurant restaurant = restaurants.get(0);
+
         assertThat(restaurant.getId(), is(1004L));
     }
 
@@ -85,9 +104,16 @@ class RestaurantServiceTests {
     public void getRestaurantWithExisted(){
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
 
+        verify(menuItemRepository).findAllByRestaurantId(eq(1004L));
+        verify(reviewRepository).findAllByRestaurantId(1004L);
+
         assertThat(restaurant.getId(), is(1004L));
+
         MenuItem menuItem = restaurant.getMenuItems().get(0);
         assertThat(menuItem.getName(), is("Kimchi"));
+
+        Review review = restaurant.getReviews().get(0);
+        assertThat(review.getDescription(), is("bad"));
     }
 
     @Test

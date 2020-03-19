@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ public class MenuItem {
     private String name;
 
     @Transient      //DB에 넣지않는다
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private boolean deleted;
 //    public MenuItem(String name) {
 //        this.name = name;

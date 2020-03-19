@@ -18,17 +18,19 @@ public class MenuItemService {
         this.menuItemRepository = menuItemRepository;
     }
 
+    //본래는 CRUD로 각 함수를 만들어 사용했지만 bulkUpdate를 통해 한 번에 조건을 통해 다뤘다.
     public void bulkUpdate(Long restaurantId, List<MenuItem> menuItems) {
         for(MenuItem menuItem: menuItems){
-            if(menuItem.isDeleted()){
-                menuItemRepository.deleteById(menuItem.getId());
-                continue;
-            }
-            menuItem.setRestaurantId(restaurantId);
-            menuItemRepository.save(menuItem);
+            update(restaurantId, menuItem);
         }
-//        MenuItem menuItem = MenuItem.builder().build();
+    }
 
-        // TODO : bulkupdate
+    private void update(Long restaurantId, MenuItem menuItem) {
+        if(menuItem.isDeleted()){
+            menuItemRepository.deleteById(menuItem.getId());
+            return;
+        }
+        menuItem.setRestaurantId(restaurantId);
+        menuItemRepository.save(menuItem);
     }
 }

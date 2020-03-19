@@ -10,14 +10,19 @@ import java.util.List;
 @Service        //component와 비슷
 public class RestaurantService {
 
-    @Autowired
-    RestaurantRepository restaurantRepository;
-    @Autowired
-    MenuItemRepository menuItemRepository;
+    private RestaurantRepository restaurantRepository;
+    private MenuItemRepository menuItemRepository;
+    private ReviewRepository reviewRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository, MenuItemRepository menuItemRepository){
+    //각 autowired를 세번안하고 생성자로 묶어줄수있음.
+    public RestaurantService(
+            RestaurantRepository restaurantRepository,
+            MenuItemRepository menuItemRepository,
+            ReviewRepository reviewRepository)
+    {
         this.restaurantRepository = restaurantRepository;
         this.menuItemRepository = menuItemRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public List<Restaurant> getRestaurants() {
@@ -31,7 +36,10 @@ public class RestaurantService {
         // 실무에서는 이렇게하면 안됌. restuarant 객체가 null로 들어왔을때 에러처리가 안되어있음
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-        restaurant.setMenuItems((menuItems));
+        restaurant.setMenuItems(menuItems);
+
+        List<Review> reviews = reviewRepository.findAllByRestaurantId(id);
+        restaurant.setReviews(reviews);
 
         return restaurant;
     }
