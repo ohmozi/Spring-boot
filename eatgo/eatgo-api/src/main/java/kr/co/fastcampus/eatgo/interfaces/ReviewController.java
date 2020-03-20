@@ -1,6 +1,7 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
 import kr.co.fastcampus.eatgo.application.ReviewService;
+import kr.co.fastcampus.eatgo.domain.Restaurant;
 import kr.co.fastcampus.eatgo.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,19 @@ public class ReviewController {
     @PostMapping("restaurants/{restaurantId}/reviews")
     public ResponseEntity<?> create(
             @PathVariable("restaurantId") Long restaurantId,
-            @Valid @RequestBody Review review
+            @Valid @RequestBody Review resource
     ) throws URISyntaxException
     {
-        reviewService.addReview(review, restaurantId);
-        URI location = new URI("/restaurants/" + restaurantId + "/reviews/" + review.getId()
-                + review.getName()+ review.getRestaurantId() + review.getDescription() + review.getScore());
+//        Review review = reviewService.addReview(
+//                Review.builder()
+//                        .name(resource.getName())
+//                        .score(resource.getScore())
+//                        .description(resource.getDescription())
+//                        .build(), restaurantId);
+
+        Review review = reviewService.addReview(resource, restaurantId);
+
+        URI location = new URI("/restaurants/" + restaurantId + "/reviews/" + review.getId());
         return ResponseEntity.created(location).body("{}");
     }
 }

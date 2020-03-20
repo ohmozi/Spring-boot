@@ -87,8 +87,7 @@ class RestaurantServiceTests {
                         .description("bad")
                         .build());
 
-        given(reviewRepository.findAllByRestaurantId(1004L))
-                .willReturn(reviews);
+        given(reviewRepository.findAllByRestaurantId(1004L)).willReturn(reviews);
     }
 
     @Test
@@ -141,11 +140,11 @@ class RestaurantServiceTests {
                 .name("BeRyong")
                 .address("Busan")
                 .build();
-        Restaurant saved = Restaurant.builder()
-                .id(1234L)
-                .name("BeRyong")
-                .address("Busan")
-                .build();
+//        Restaurant saved = Restaurant.builder()
+//                .id(1234L)
+//                .name("BeRyong")
+//                .address("Busan")
+//                .build();
 
         Restaurant created = restaurantService.addRestaurant(restaurant);
 

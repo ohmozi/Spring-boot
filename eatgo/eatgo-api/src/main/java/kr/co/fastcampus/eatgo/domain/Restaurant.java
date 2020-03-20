@@ -28,9 +28,6 @@ public class Restaurant {
     private String name;
     @NotEmpty
     private String address;
-//    private String regionName;      //Seoul
-//    private String categoryName;    //Korean
-//    private String tagNames;        //#존맛탱
 //    위처럼 변수가 추가되고 여러개일때 get,set함수를 선언하지 않아도 되며 생성자에서 변수 순서 및 어떤 변수가 있는지를 명시해줄수있어
 //    Lombok이 사용된다
     @Transient      //임시로 통과하는 어노테이션
@@ -58,36 +55,8 @@ public class Restaurant {
         this.menuItems = new ArrayList<>(menuItems);
     }
 
-    public void setRevies(List<Review> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = new ArrayList<>(reviews);
     }
 
-//    public Restaurant(String name, String address) {
-//        this.name = name;
-//        this.address = address;
-//    }
-//
-//    //@Allargsconstructor
-//    public Restaurant(Long id, String name, String address) {
-//        this.id = id;
-//        this.name = name;
-//        this.address = address;
-//    }
-    //lombok setter로 사용가능
-//    public void setId(long id) {
-//        this.id = id;
-//    }
-    //lombok getter로 사용가능
-//    public Long getId(){
-//        return id;
-//    }
-//    public String getName() {
-//        return name;
-//    }
-//    public String getAddress() {
-//        return address;
-//    }
-//    public List<MenuItem> getMenuItems(){
-//        return menuItems;
-//    }
 }

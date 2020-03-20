@@ -34,18 +34,13 @@ class ReviewControllerTests {
     @Test
     public void createWithValidAttributes() throws Exception {
 
-        given(reviewService.addReview(any(), eq(1L))).willReturn(
-                Review.builder().id(1004L).build());
+//        given(reviewService.addReview(any(), eq(1L))).willReturn(
+//                Review.builder().id(1004L).build());
 
-//        given(reviewService.addReview(any(), eq(1L))).will(invocation -> {
-//            Review review = invocation.getArgument(0);
-//            return  Review.builder()
-//                    .id(123L)
-//                    .name(review.getName())
-//                    .score(review.getScore())
-//                    .description(review.getDescription())
-//                    .build();
-//        });
+        given(reviewService.addReview(any(), eq(1L))).will(invocation -> {
+            Review review = invocation.getArgument(0);
+            return  Review.builder().id(1004L).build();
+        });
         // 여기 뭐지???? 강의내용에 포함 안되어있음  이부분 없으면 아래 테스트케이스에서 id값이 null로 읽음
         // invocation?
 
