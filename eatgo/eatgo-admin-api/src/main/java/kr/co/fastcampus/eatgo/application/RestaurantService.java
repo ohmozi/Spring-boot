@@ -10,18 +10,12 @@ import java.util.List;
 public class RestaurantService {
 
     private RestaurantRepository restaurantRepository;
-    private MenuItemRepository menuItemRepository;
-    private ReviewRepository reviewRepository;
 
     //각 autowired를 세번안하고 생성자로 묶어줄수있음.
     public RestaurantService(
-            RestaurantRepository restaurantRepository,
-            MenuItemRepository menuItemRepository,
-            ReviewRepository reviewRepository)
+            RestaurantRepository restaurantRepository)
     {
         this.restaurantRepository = restaurantRepository;
-        this.menuItemRepository = menuItemRepository;
-        this.reviewRepository = reviewRepository;
     }
 
     public List<Restaurant> getRestaurants() {
@@ -33,12 +27,6 @@ public class RestaurantService {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(()->new RestaurantNotFoundException(id));     //optional 처리를 null로 하겠다.
         // 실무에서는 이렇게하면 안됌. restuarant 객체가 null로 들어왔을때 에러처리가 안되어있음
-
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-        restaurant.setMenuItems(menuItems);
-
-        List<Review> reviews = reviewRepository.findAllByRestaurantId(id);
-        restaurant.setReviews(reviews);
 
         return restaurant;
     }

@@ -7,11 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -27,6 +31,21 @@ class MenuItemServiceTests {
         MockitoAnnotations.initMocks(this);
 
         menuItemService = new MenuItemService(menuItemRepository);        //서비스에서 사용할 레포를 넣어줘야한다
+    }
+
+    @Test
+    public void getMenuItems(){
+        List<MenuItem> mockMenuItems = new ArrayList<>();
+        mockMenuItems.add(MenuItem.builder().name("Kimchi").build());
+
+        given(menuItemRepository.findAllByRestaurantId(1004L))
+                .willReturn(mockMenuItems);
+
+        List<MenuItem> menuitems =menuItemService.getMenuItems(1004L);
+
+        MenuItem menuItem = menuitems.get(0);
+
+        assertThat(menuItem.getName(), is("Kimchi"));
     }
 
     @Test

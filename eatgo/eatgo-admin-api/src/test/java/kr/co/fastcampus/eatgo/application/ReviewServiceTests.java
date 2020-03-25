@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -29,33 +32,16 @@ class ReviewServiceTests {
     }
 
     @Test
-    public void addReivew(){
-        given(reviewRepository.save(any())).will(invocation -> {
-            Review review = invocation.getArgument(0);
-            review.setId(123L);
-            return review;
-        });
+    public void getReviews(){
+        List<Review> mockReviews = new ArrayList<>();
+        mockReviews.add(Review.builder().description("Cool!").build());
 
-        Review review = Review.builder()
-                .name("jihun")
-                .score(3)
-                .description("good enough")
-                .build();
+        given(reviewRepository.findAll()).willReturn(mockReviews);
 
-//        Review saved = Review.builder()
-//                .id(123L)
-//                .name("jihun")
-//                .score(3)
-//                .description("good enough")
-//                .build();
+        List<Review> reviews = reviewService.getReviews();
 
-        Review created = reviewService.addReview(review, 1004L  );
+        Review review = reviews.get(0);
 
-        assertThat(created.getId(), is(123L));
-        assertThat(created.getName(), is("jihun"));
-
-//        reviewService.addReview(review, 1004L);
-        verify(reviewRepository).save(any());   //리뷰레포에 무엇인가 저장되어있는가?
-
+        assertThat(review.getDescription(), is("Cool!"));
     }
 }

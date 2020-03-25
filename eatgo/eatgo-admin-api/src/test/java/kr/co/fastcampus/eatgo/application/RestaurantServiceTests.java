@@ -24,10 +24,6 @@ class RestaurantServiceTests {
     //Mock 자바에서의 사용
     @Mock           // 아래 두개의 레포지토리는 restaurantService로 대체될수있다.
     private RestaurantRepository restaurantRepository;
-    @Mock
-    private MenuItemRepository menuItemRepository;
-    @Mock
-    private ReviewRepository reviewRepository;
 
     @BeforeEach     //Junit4에서 Before과 동일
     //모든테스트가 실행되기전에 실행하고 가기
@@ -36,21 +32,11 @@ class RestaurantServiceTests {
 //        restaurantRepository = new RestaurantRepositoryImpl();
 //        menuItemRepository = new MenuItemRepositoryImpl();
         mockRestuarantRepository();
-        mockMenuItemRepository();
-        mockReivewRepository();
 
         restaurantService = new RestaurantService(
-                restaurantRepository, menuItemRepository, reviewRepository);        //서비스에서 사용할 레포를 넣어줘야한다
+                restaurantRepository);        //서비스에서 사용할 레포를 넣어줘야한다
     }
 
-
-    private void mockMenuItemRepository() {
-        List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(MenuItem.builder()
-                .name("Kimchi")
-                .build());
-        given(menuItemRepository.findAllByRestaurantId(1004L)).willReturn(menuItems);
-    }
 
     private void mockRestuarantRepository() {
         List<Restaurant> restaurants = new ArrayList<>();
@@ -77,16 +63,6 @@ class RestaurantServiceTests {
 
     }
 
-    private void mockReivewRepository() {
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(Review.builder()
-                        .name("jusnag")
-                        .score(1)
-                        .description("bad")
-                        .build());
-
-        given(reviewRepository.findAllByRestaurantId(1004L)).willReturn(reviews);
-    }
 
     @Test
     public void getRestaurants(){
@@ -101,16 +77,7 @@ class RestaurantServiceTests {
     public void getRestaurantWithExisted(){
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
 
-        verify(menuItemRepository).findAllByRestaurantId(eq(1004L));
-        verify(reviewRepository).findAllByRestaurantId(1004L);
-
         assertThat(restaurant.getId(), is(1004L));
-
-        MenuItem menuItem = restaurant.getMenuItems().get(0);
-        assertThat(menuItem.getName(), is("Kimchi"));
-
-        Review review = restaurant.getReviews().get(0);
-        assertThat(review.getDescription(), is("bad"));
     }
 
     @Test

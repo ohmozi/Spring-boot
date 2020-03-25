@@ -11,13 +11,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)  // junit4에서는 Runwith, 5에서는 extendwith
 @WebMvcTest(ReviewController.class)
@@ -29,37 +33,16 @@ class ReviewControllerTests {
     @MockBean
     private ReviewService reviewService;
 
+//   리뷰는 어드민이 확인만 하게 하면된다
     @Test
-    public void createWithValidAttributes() throws Exception {
+    public void list() throws Exception {
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(Review.builder().description("Cool!").build());
 
-//        given(reviewService.addReview(any(), eq(1L))).willReturn(
-//                Review.builder().id(1004L).build());
+        given(reviewService.getReviews()).willReturn(reviews);
 
-        given(reviewService.addReview(any(), eq(1L))).will(invocation -> {
-            Review review = invocation.getArgument(0);
-            return  Review.builder().id(1004L).build();
-        });
-        // 여기 뭐지???? 강의내용에 포함 안되어있음  이부분 없으면 아래 테스트케이스에서 id값이 null로 읽음
-        // invocation?
-
-        mvc.perform(post("/restaurants/1/reviews")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"jihun\", \"score\":5,\"description\":\"good!!\"}"))       //여기서 입력한 값은 저장되는데 id, restid값이 저장이안됨
-                .andExpect(status().isCreated())
-                .andExpect(header().string("location", "/restaurants/1/reviews/1004"));
-
-        verify(reviewService).addReview(any(),eq(1L));
-    }
-
-
-    @Test
-    public void createWithInvalidAttributes() throws Exception {
-        mvc.perform(post("/restaurants/1/reviews")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"))
-                .andExpect(status().isBadRequest());
-
-        verify(reviewService, never()).addReview(any(),eq(1L));
-        //잘못된게 들어와서 addreivew가 실행이 안되어야함.
+        mvc.perform(get("/reviews"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Cool!")));
     }
 }
