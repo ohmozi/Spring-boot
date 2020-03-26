@@ -23,7 +23,6 @@ public class RegionService {
     }
 
     public Region addRegion(String name) {
-        //TODO:구현필요
         Region region = Region.builder().name(name).build();
 
         regionRepository.save(region);

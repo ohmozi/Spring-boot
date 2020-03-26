@@ -22,4 +22,9 @@ public class UserService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+
+    public User addUsers(){
+        // TODO : 사용자 추가 구현
+        return null;
+    }
 }
