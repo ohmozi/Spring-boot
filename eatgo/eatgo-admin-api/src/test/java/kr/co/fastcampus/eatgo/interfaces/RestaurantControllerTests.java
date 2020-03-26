@@ -15,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -48,6 +47,7 @@ class RestaurantControllerTests {
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("seoul")
                 .build());
@@ -68,6 +68,7 @@ class RestaurantControllerTests {
     public void detailWithExisted() throws Exception {
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("seoul")
                 .build();
@@ -104,6 +105,7 @@ class RestaurantControllerTests {
                 Restaurant restaurant = invocation.getArgument(0);
                 return Restaurant.builder()
                         .id(1234L)
+                        .categoryId(1L)
                         .name(restaurant.getName())
                         .address(restaurant.getAddress())
                         .build();
@@ -111,7 +113,7 @@ class RestaurantControllerTests {
 //        Restaurant restaurant = new Restaurant(1234L,"BeRyong","Busan");
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)        //컨텐트가 json타입이란것을 알려주기
-                .content("{\"name\":\"BeRyong\",\"address\":\"Busan\"}"))
+                .content("{\"categoryId\":1, \"name\":\"BeRyong\",\"address\":\"Busan\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurants/1234"))
                 .andExpect(content().string("{}"));
@@ -124,7 +126,7 @@ class RestaurantControllerTests {
 
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)        //컨텐트가 json타입이란것을 알려주기
-                .content("{\"name\":\"\",\"address\":\"\"}"))
+                .content("{\"categoryId\":1, \"name\":\"\",\"address\":\"\"}"))
                 .andExpect(status().isBadRequest());
     }
     @Test
@@ -132,7 +134,7 @@ class RestaurantControllerTests {
 
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)        //컨텐트가 json타입이란것을 알려주기
-                .content("{\"name\":\"\",\"address\":\"Busan\"}"))
+                .content("{\"categoryId\":1, \"name\":\"\",\"address\":\"Busan\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -140,7 +142,7 @@ class RestaurantControllerTests {
     public void updateWithValidData() throws Exception {
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"jihun bar\", \"address\":\"gunpo\"}"))
+                .content("{\"categoryId\":1, \"name\":\"jihun bar\", \"address\":\"gunpo\"}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L,"jihun bar","gunpo");
@@ -150,7 +152,7 @@ class RestaurantControllerTests {
     public void updateWithInvalidData() throws Exception {
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"\", \"address\":\"\"}"))
+                .content("{\"categoryId\":1, \"name\":\"\", \"address\":\"\"}"))
                 .andExpect(status().isBadRequest());
 
     }

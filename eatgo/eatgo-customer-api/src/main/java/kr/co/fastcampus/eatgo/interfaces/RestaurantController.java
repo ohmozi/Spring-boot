@@ -3,12 +3,8 @@ package kr.co.fastcampus.eatgo.interfaces;
 import kr.co.fastcampus.eatgo.application.RestaurantService;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 //** UI layer는 사용자와 내부에 있는 로직및 도메인 모델들이 서로 상관없도록 디자인 **
@@ -21,8 +17,10 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
-    public List<Restaurant> list(){     //가게 목록 리스트
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+    public List<Restaurant> list(@RequestParam("region") String region,
+                                 @RequestParam("category") Long categoryId){     //가게 목록 리스트
+
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region, categoryId);
 
         return restaurants;
     }

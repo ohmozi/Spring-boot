@@ -120,6 +120,7 @@ class RestaurantServiceTests {
     public void updateRestuarant(){
         Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("seoul")
                 .build();

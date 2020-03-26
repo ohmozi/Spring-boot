@@ -24,8 +24,10 @@ public class RestaurantService {
         this.reviewRepository = reviewRepository;
     }
 
-    public List<Restaurant> getRestaurants() {
-        List<Restaurant> restaurants = restaurantRepository.findAll();
+    public List<Restaurant> getRestaurants(String region, long categoryId) {
+        //TODO: region으로 필터링, categoryID사용
+
+        List<Restaurant> restaurants = restaurantRepository.findByAddressContainingAndCategoryId(region, categoryId);  //주소를 포함하고있는것을 찾음
         return restaurants;
     }
 

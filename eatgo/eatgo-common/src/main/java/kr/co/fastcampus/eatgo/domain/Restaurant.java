@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +23,16 @@ public class Restaurant {
     @GeneratedValue
     private Long id;
     //@Setter 변수에 선언하면 이 변수에 대해서만 생성
+
+    @NotNull
+    private Long categoryId;
+
     @NotEmpty
     private String name;
+
     @NotEmpty
     private String address;
+    //실제로는 categoryId처럼 주소도 id로 사용하여 검색속도 향상
 //    위처럼 변수가 추가되고 여러개일때 get,set함수를 선언하지 않아도 되며 생성자에서 변수 순서 및 어떤 변수가 있는지를 명시해줄수있어
 //    Lombok이 사용된다
     @Transient      //임시로 통과하는 어노테이션
