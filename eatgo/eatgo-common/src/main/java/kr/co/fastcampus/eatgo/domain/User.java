@@ -28,7 +28,6 @@ public class User {
     @NotEmpty
     private String name;
 
-    @NotNull
     private Long level;
 
     public boolean isAdmin() {

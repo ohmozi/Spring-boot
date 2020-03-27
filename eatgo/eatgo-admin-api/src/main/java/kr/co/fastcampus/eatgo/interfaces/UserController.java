@@ -1,11 +1,15 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
 import kr.co.fastcampus.eatgo.application.UserService;
+import kr.co.fastcampus.eatgo.domain.Region;
 import kr.co.fastcampus.eatgo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -20,6 +24,26 @@ public class UserController {
 
         return users;
     }
+
+    @PostMapping("/users")
+    public ResponseEntity<?> create(@Valid @RequestBody User resource
+    ) throws URISyntaxException {
+            User user = userService.addUser(resource.getEmail(), resource.getName());
+
+            URI location = new URI("/users/" + resource.getId());
+            return ResponseEntity.created(location).body("{}");
+    }
+
+    @PatchMapping("/users/{id}")
+    public String update(
+            @PathVariable("id") Long id,
+            @RequestBody User resource){
+
+        User user = userService.updateUser(id, resource.getEmail(), resource.getName(), resource.getLevel());
+
+        return "";
+    }
+
 
     //1. user list
     //2. user create -> 회원가입

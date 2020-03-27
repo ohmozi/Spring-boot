@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,8 +24,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUsers(){
-        // TODO : 사용자 추가 구현
-        return null;
+    public User addUser(String email, String name){
+
+        User user = User.builder().email(email).name(name).build();
+
+        return userRepository.save(user);
+    }
+
+    public User updateUser(Long id, String email, String name, Long level) {
+        //TODO:restaruantService의 예외 처리 참고
+        User user = userRepository.findById(id).orElse(null);
+//        user.setEmail(email);
+//        user.setName(name);
+
+        return user;
     }
 }
