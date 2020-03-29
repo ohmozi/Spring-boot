@@ -110,6 +110,7 @@ class UserServiceTests {
         User user = userService.deactiveUser(1004L);
 
         verify(userRepository).findById(1004L);
+
         assertThat(user.isAdmin(), is(false));
         assertThat(user.isActive(), is(false));
     }

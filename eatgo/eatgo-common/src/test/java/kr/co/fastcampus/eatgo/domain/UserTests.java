@@ -14,11 +14,15 @@ class UserTests {
         User user = User.builder()
                 .email("gown5@gmail.com")
                 .name("ohmozi")
-                .level(11L)
+                .level(101L)
                 .build();
 
         assertThat(user.getName(), is("ohmozi"));
         assertThat(user.isAdmin(), is(true));
+        assertThat(user.isActive(), is(true));
+
+        user.deactivate();
+        assertThat(user.isActive(), is(false));
     }
 
 }

@@ -13,5 +13,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findById(Long id);
 
-//    List<User> findAllByRestaurantId(Long restaurantId);
 }

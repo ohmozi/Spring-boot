@@ -1,17 +1,16 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
 import kr.co.fastcampus.eatgo.application.UserService;
-import kr.co.fastcampus.eatgo.domain.Region;
 import kr.co.fastcampus.eatgo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class UserController {
 
@@ -26,11 +25,11 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<?> create(@Valid @RequestBody User resource
+    public ResponseEntity<?> create(@RequestBody User resource
     ) throws URISyntaxException {
             User user = userService.addUser(resource.getEmail(), resource.getName());
 
-            URI location = new URI("/users/" + resource.getId());
+            URI location = new URI("/users/" + user.getId());
             return ResponseEntity.created(location).body("{}");
     }
 
@@ -41,7 +40,7 @@ public class UserController {
 
         User user = userService.updateUser(id, resource.getEmail(), resource.getName(), resource.getLevel());
 
-        return "";
+        return "{}";
     }
 
     @DeleteMapping("/users/{id}")
@@ -49,7 +48,7 @@ public class UserController {
 
         User user =userService.deactiveUser(id);
 
-        return "";
+        return "{}";
     }
 
 

@@ -26,14 +26,18 @@ public class User {
     @NotEmpty
     private String name;
 
+    @NotNull
     private Long level;
 
     public boolean isAdmin() {
-        return level >=10;
+        return level >=100;
     }
 
     public boolean isActive() {
-        return true;
-        //active가 아닌경우 테스트 만들기
+        return level > 0;
+    }
+
+    public void deactivate() {
+        level = 0L;
     }
 }
