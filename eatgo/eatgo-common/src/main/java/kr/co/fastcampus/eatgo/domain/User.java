@@ -1,9 +1,6 @@
 package kr.co.fastcampus.eatgo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity     //메뉴아이템 레포에 대한 구현이 없이도 JPA로 구현가능함
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -32,5 +30,10 @@ public class User {
 
     public boolean isAdmin() {
         return level >=10;
+    }
+
+    public boolean isActive() {
+        return true;
+        //active가 아닌경우 테스트 만들기
     }
 }

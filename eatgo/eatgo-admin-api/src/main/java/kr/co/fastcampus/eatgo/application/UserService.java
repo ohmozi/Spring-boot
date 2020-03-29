@@ -34,9 +34,18 @@ public class UserService {
     public User updateUser(Long id, String email, String name, Long level) {
         //TODO:restaruantService의 예외 처리 참고
         User user = userRepository.findById(id).orElse(null);
-//        user.setEmail(email);
-//        user.setName(name);
+
+        user.setEmail(email);       //원래 이메일 확인하고 바꿔주기
+        user.setName(name);
+        user.setLevel(level);
 
         return user;
     }
+
+    public User deactiveUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        return null;
+    }
+
 }

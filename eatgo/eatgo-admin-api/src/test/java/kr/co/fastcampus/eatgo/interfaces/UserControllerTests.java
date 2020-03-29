@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.everyItem;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -84,5 +85,13 @@ class UserControllerTests {
         Long level = 100L;
 
         verify(userService).updateUser(eq(id), eq(email), eq(name), eq(level));
+    }
+
+    @Test
+    public void deactivate() throws Exception {
+        mvc.perform(delete("/users/1004"))
+                .andExpect(status().isOk());
+
+        verify(userService).deactiveUser(1004L);
     }
 }

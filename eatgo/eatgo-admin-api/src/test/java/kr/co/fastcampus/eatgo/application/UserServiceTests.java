@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -71,7 +72,14 @@ class UserServiceTests {
         String name = "super";
         Long level = 100L;
 
-        given(userRepository.save(any())).willReturn(mockUser);
+        User mockUser = User.builder()
+                .id(id)
+                .email(email)
+                .name("jihun")
+                .level(1L)
+                .build();
+
+        given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
         //실제 찾을수 있도록 여기서부터 해결
 
         User user = userService.updateUser(id, email, name, level);
@@ -79,5 +87,30 @@ class UserServiceTests {
         verify(userRepository).findById(eq(id));
 
         assertThat(user.getName(), is("super"));
+        assertThat(user.isAdmin(), is(true));
+    }
+
+    @Test
+    public void deactiveUser(){
+        Long id =1004L;
+        String email = "test@example.com";
+        String name = "admin";
+        Long level = 100L;
+
+        User mockUser = User.builder()
+                .id(id)
+                .email(email)
+                .name(name)
+                .level(level)
+                .build();
+
+        given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
+        //이부분 제거해보기
+
+        User user = userService.deactiveUser(1004L);
+
+        verify(userRepository).findById(1004L);
+        assertThat(user.isAdmin(), is(false));
+        assertThat(user.isActive(), is(false));
     }
 }
