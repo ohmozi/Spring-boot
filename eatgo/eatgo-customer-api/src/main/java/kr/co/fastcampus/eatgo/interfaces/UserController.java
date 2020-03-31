@@ -28,7 +28,6 @@ public class UserController {
 //                .password(resource.getPassword())
 //                .build();
 
-        //todo:실제로 추가해주기
         User user = userService.registerUser(resource.getEmail(), resource.getName(), resource.getPassword());
 
         String url = "/users/" + user.getId();
