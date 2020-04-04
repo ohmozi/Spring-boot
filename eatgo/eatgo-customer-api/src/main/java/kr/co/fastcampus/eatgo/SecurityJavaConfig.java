@@ -1,9 +1,13 @@
 package kr.co.fastcampus.eatgo;
 
+import kr.co.fastcampus.eatgo.utils.JwtUtil;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 // gradle에서 starter-security 의존성 추가해주어서  port/login 으로 들어가면 로그인 페이지가나옴
@@ -19,5 +23,15 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()       //http post처리
                 .formLogin().disable()     //login페이지가 안뜨도록 disable
                 .headers().frameOptions().disable();        //iframe사용 허용
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtUtil jwtUtil(){
+        return new JwtUtil();
     }
 }
