@@ -46,7 +46,7 @@ public class UserService {
     }
 
     public User authenticate(String email, String password) {
-        User user = userRepository.findByEmail(email).orElseThrow(()->new EmailExistedException(email));;
+        User user = userRepository.findByEmail(email).orElseThrow(()->new EmailNotExistedException(email));;
 
         // 패스워드의 인코딩
         if(!passwordEncoder.matches(password, user.getPassword())){         //인코딩된 비밀번호와 사용자가 입력한 비밀번호가 다를경우

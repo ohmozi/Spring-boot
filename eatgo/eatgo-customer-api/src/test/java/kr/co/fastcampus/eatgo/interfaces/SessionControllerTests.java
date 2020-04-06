@@ -31,6 +31,9 @@ class SessionControllerTests {
     private MockMvc mvc;
 
     @MockBean
+    private JwtUtil jwtUtil;
+
+    @MockBean
     private UserService userService;
 
     //로그인정보가 적절할때
@@ -50,17 +53,19 @@ class SessionControllerTests {
 
         given(userService.authenticate(email,password)).willReturn(mockUser);
 
+        given(jwtUtil.createToken(id, name)).willReturn("header.payload.signature");
+
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"email\":\"test@test.com\", \"password\":\"test\"}"))       //여기서 입력한 값은 저장되는데 id, restid값이 저장이안됨
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location","/session"))
-                .andExpect(content().string(containsString("{\"accessToken\":\"")))
-                .andExpect(content().string(containsString(".")));
+                .andExpect(content().string(containsString("{\"accessToken\":\"header.payload.signature\"}")));
 
 
         verify(userService).authenticate(eq(email), eq(password));
     }
+
 
     // 입력에 오류가 있을경우 처리, 패스워드가 틀리거나 이메일이 존재하지 않을 때
     @Test

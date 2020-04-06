@@ -5,6 +5,7 @@ import kr.co.fastcampus.eatgo.domain.User;
 import kr.co.fastcampus.eatgo.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@CrossOrigin
 @RestController
 public class SessionController {
 
@@ -25,8 +27,6 @@ public class SessionController {
     public ResponseEntity<SessionResponseDto> create(
             @RequestBody SessionRequestDto resource
     ) throws URISyntaxException {
-
-
         String email = resource.getEmail();
         String password = resource.getPassword();
 

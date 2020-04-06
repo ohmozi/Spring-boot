@@ -35,11 +35,11 @@ class ReviewServiceTests {
             return review;
         });
 
-        Review review = Review.builder()
-                .name("jihun")
-                .score(3)
-                .description("good enough")
-                .build();
+//        Review review = Review.builder()
+//                .name("jihun")
+//                .score(3)
+//                .description("good enough")
+//                .build();
 
 //        Review saved = Review.builder()
 //                .id(123L)
@@ -48,7 +48,7 @@ class ReviewServiceTests {
 //                .description("good enough")
 //                .build();
 
-        Review created = reviewService.addReview(review, 1004L  );
+        Review created = reviewService.addReview(1004L, "jihun", 3,"good enough" );
 
         assertThat(created.getId(), is(123L));
         assertThat(created.getName(), is("jihun"));

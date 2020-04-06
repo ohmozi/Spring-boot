@@ -87,7 +87,7 @@ class UserServiceTests {
 
     @Test
     public void authenticateWithNotExistedEmail(){
-        Exception exception = assertThrows(EmailExistedException.class, () -> {
+        Exception exception = assertThrows(EmailNotExistedException.class, () -> {
 
             String email = "x@test.com";
             String password = "test";

@@ -23,7 +23,7 @@ public class Review {
 //    @NotNull
     private Long restaurantId;
 
-    @NotEmpty
+//    @NotEmpty
     private String name;
 
     @NotNull        //empty는 스트링일때 사용
