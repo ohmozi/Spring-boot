@@ -56,5 +56,4 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(claims, null);  //가장 자주 쓰는 기본틀
         return authentication;
     }
-    //TODO: jwt분석 필요
 }
