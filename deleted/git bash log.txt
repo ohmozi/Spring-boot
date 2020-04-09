@@ -1,0 +1,547 @@
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github (master)
+$ cd gyls
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jijiji)
+$ git status
+On branch jijiji
+nothing to commit, working tree clean
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jijiji)
+$ git push origin jijiji
+ojEnumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 262 bytes | 65.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'jijiji' on GitHub by visiting:
+remote:      https://github.com/HoeYeon/gyls/pull/new/jijiji
+remote:
+To https://github.com/HoeYeon/gyls.git
+ * [new branch]        jijiji -> jijiji
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jijiji)
+$ git remote -v
+origin  https://github.com/HoeYeon/gyls.git (fetch)
+origin  https://github.com/HoeYeon/gyls.git (push)
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jijiji)
+$ git pull
+error: unable to read askpass response from 'C:/Program Files/Git/mingw64/libexec/git-core/git-gui--askpass'
+Username for 'https://github.com':       1 [sig] bash 740! sigpacket::process: Suppressing signal 18 to win32 process (pid 25076)
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jijiji)
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git fetch
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git pull
+Already up to date.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/change_readme
+  origin/feature
+  origin/jijiji
+  origin/master
+  origin/ohmozi
+  origin/spring
+  origin/ssal
+  origin/ssaljae
+  origin/test
+  origin/test123
+  origin/ugongjae
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git fetch
+From https://github.com/HoeYeon/gyls
+ + 0254100b...38645540 test123    -> origin/test123  (forced update)
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/change_readme
+  origin/feature
+  origin/jijiji
+  origin/master
+  origin/ohmozi
+  origin/spring
+  origin/ssal
+  origin/ssaljae
+  origin/test
+  origin/test123
+  origin/ugongjae
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git pull
+ojAlready up to date.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/change_readme
+  origin/feature
+  origin/jijiji
+  origin/master
+  origin/ohmozi
+  origin/spring
+  origin/ssal
+  origin/ssaljae
+  origin/test
+  origin/test123
+  origin/ugongjae
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git fetch
+From https://github.com/HoeYeon/gyls
+ * [new branch]        real_test  -> origin/real_test
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git pull
+Already up to date.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/change_readme
+  origin/feature
+  origin/jijiji
+  origin/master
+  origin/ohmozi
+  origin/real_test
+  origin/spring
+  origin/ssal
+  origin/ssaljae
+  origin/test
+  origin/test123
+  origin/ugongjae
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git branch real_test
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (master)
+$ git checkout real_test
+Switched to branch 'real_test'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ ls
+asdflkasjdfl.txt  asdfsdf.txt  back/  front/  README.md
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git branch real_test_jihun
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git checkout real_test_jihun
+Switched to branch 'real_test_jihun'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ vim jihun_algo.txt
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ git status
+On branch real_test_jihun
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        jihun_algo.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ git add .
+warning: LF will be replaced by CRLF in jihun_algo.txt.
+The file will have its original line endings in your working directory
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ git commit -m"sindorim study!"
+[real_test_jihun 99ce5477] sindorim study!
+ 1 file changed, 1 insertion(+)
+ create mode 100644 jihun_algo.txt
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ git push origin real_test_jihun
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 306 bytes | 153.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'real_test_jihun' on GitHub by visiting:
+remote:      https://github.com/HoeYeon/gyls/pull/new/real_test_jihun
+remote:
+To https://github.com/HoeYeon/gyls.git
+ * [new branch]        real_test_jihun -> real_test_jihun
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ git checkout real_test
+Switched to branch 'real_test'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ ls
+asdflkasjdfl.txt  asdfsdf.txt  back/  front/  README.md
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git fetch
+remote: Enumerating objects: 55, done.
+remote: Counting objects: 100% (55/55), done.
+remote: Compressing objects: 100% (20/20), done.
+remote: Total 24 (delta 14), reused 6 (delta 1), pack-reused 0
+Unpacking objects: 100% (24/24), done.
+From https://github.com/HoeYeon/gyls
+   d48279ac..e832ecd3  ohmozi     -> origin/ohmozi
+   38645540..98446fbb  real_test  -> origin/real_test
+ * [new branch]        real_test1 -> origin/real_test1
+   e15b29cc..52eb2007  ssaljae    -> origin/ssaljae
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> real_test
+
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git pull real_test
+fatal: 'real_test' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git checkout real_test
+Already on 'real_test'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ ls
+asdflkasjdfl.txt  asdfsdf.txt  back/  front/  README.md
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git fetch
+remote: Enumerating objects: 39, done.
+remote: Counting objects: 100% (39/39), done.
+remote: Compressing objects: 100% (20/20), done.
+remote: Total 23 (delta 11), reused 7 (delta 3), pack-reused 0
+Unpacking objects: 100% (23/23), done.
+From https://github.com/HoeYeon/gyls
+   38645540..7c514c19  master     -> origin/master
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/feature
+  origin/jijiji
+  origin/master
+  origin/ohmozi
+  origin/real_test
+  origin/real_test1
+  origin/real_test_jihun
+  origin/ssal
+  origin/ssaljae
+  origin/test123
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git fetch -p
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/feature
+  origin/jijiji
+  origin/master
+  origin/ohmozi
+  origin/real_test
+  origin/real_test1
+  origin/real_test_jihun
+  origin/ssal
+  origin/ssaljae
+  origin/test123
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ ls
+asdflkasjdfl.txt  asdfsdf.txt  back/  front/  README.md
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git pull real_test
+fatal: 'real_test' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git pull
+ojThere is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> real_test
+
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git pull origin real_test
+From https://github.com/HoeYeon/gyls
+ * branch              real_test  -> FETCH_HEAD
+Updating 38645540..98446fbb
+Fast-forward
+ jihun_algo.txt | 1 +
+ print_start.py | 2 ++
+ 2 files changed, 3 insertions(+)
+ create mode 100644 jihun_algo.txt
+ create mode 100644 print_start.py
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ ls
+asdflkasjdfl.txt  back/   jihun_algo.txt  README.md
+asdfsdf.txt       front/  print_start.py
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ vim print_start.py
+
+[마지막으로 고친 뒤 저장 안 함]
+/usr/bin/bash: q: command not found
+
+shell returned 127
+
+계속하려면 엔터 혹은 명령을 입력하십시오
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git checkout real_test_jihun
+Switched to branch 'real_test_jihun'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ ls
+asdflkasjdfl.txt  asdfsdf.txt  back/  front/  jihun_algo.txt  README.md
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test_jihun)
+$ git checkout real_test
+Switched to branch 'real_test'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git branch jihuns_test
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (real_test)
+$ git checkout jihuns_test
+Switched to branch 'jihuns_test'
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ ls
+asdflkasjdfl.txt  back/   jihun_algo.txt  README.md
+asdfsdf.txt       front/  print_start.py
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ vim print_start.py
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git fetch
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git status
+On branch jihuns_test
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   print_start.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git add .
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git commint -m"jihun's change"
+git: 'commint' is not a git command. See 'git --help'.
+
+The most similar command is
+        commit
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git push origin jihuns_test
+Total 0 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'jihuns_test' on GitHub by visiting:
+remote:      https://github.com/HoeYeon/gyls/pull/new/jihuns_test
+remote:
+To https://github.com/HoeYeon/gyls.git
+ * [new branch]        jihuns_test -> jihuns_test
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git commit -m"jihun's change"
+[jihuns_test ef3a11c8] jihun's change
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git push origin jihuns_test
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 270 bytes | 90.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/HoeYeon/gyls.git
+   98446fbb..ef3a11c8  jihuns_test -> jihuns_test
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git rebase origin/real_test
+Current branch jihuns_test is up to date.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git fetch
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 10 (delta 3), reused 9 (delta 3), pack-reused 0
+Unpacking objects: 100% (10/10), done.
+From https://github.com/HoeYeon/gyls
+   98446fbb..f47f1557  real_test      -> origin/real_test
+ * [new branch]        real_test_ssal -> origin/real_test_ssal
+ * [new branch]        son            -> origin/son
+ * [new branch]        yang           -> origin/yang
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git rebase origin/real_test
+First, rewinding head to replay your work on top of it...
+Applying: jihun's change
+Using index info to reconstruct a base tree...
+M       print_start.py
+Falling back to patching base and 3-way merge...
+Auto-merging print_start.py
+CONFLICT (content): Merge conflict in print_start.py
+error: Failed to merge in the changes.
+hint: Use 'git am --show-current-patch' to see the failed patch
+Patch failed at 0001 jihun's change
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test|REBASE 1/1)
+$ git status
+rebase in progress; onto f47f1557
+You are currently rebasing branch 'jihuns_test' on 'f47f1557'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git reset HEAD <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+
+        both modified:   print_start.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test|REBASE 1/1)
+$ git add .
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test|REBASE 1/1)
+$ git status
+rebase in progress; onto f47f1557
+You are currently rebasing branch 'jihuns_test' on 'f47f1557'.
+  (all conflicts fixed: run "git rebase --continue")
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   print_start.py
+
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test|REBASE 1/1)
+$ git rebase --continue
+Applying: jihun's change
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git push origin jihuns_test
+To https://github.com/HoeYeon/gyls.git
+ ! [rejected]          jihuns_test -> jihuns_test (non-fast-forward)
+error: failed to push some refs to 'https://github.com/HoeYeon/gyls.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git push origin jihuns_test --force-m-
+error: unknown option `force-m-'
+usage: git push [<options>] [<repository> [<refspec>...]]
+
+    -v, --verbose         be more verbose
+    -q, --quiet           be more quiet
+    --repo <repository>   repository
+    --all                 push all refs
+    --mirror              mirror all refs
+    -d, --delete          delete refs
+    --tags                push tags (can't be used with --all or --mirror)
+    -n, --dry-run         dry run
+    --porcelain           machine-readable output
+    -f, --force           force updates
+    --force-with-lease[=<refname>:<expect>]
+                          require old value of ref to be at this value
+    --recurse-submodules[=(check|on-demand|no)]
+                          control recursive pushing of submodules
+    --thin                use thin pack
+    --receive-pack <receive-pack>
+                          receive pack program
+    --exec <receive-pack>
+                          receive pack program
+    -u, --set-upstream    set upstream for git pull/status
+    --progress            force progress reporting
+    --prune               prune locally removed refs
+    --no-verify           bypass pre-push hook
+    --follow-tags         push missing but relevant tags
+    --signed[=(yes|no|if-asked)]
+                          GPG sign the push
+    --atomic              request atomic transaction on remote side
+    -o, --push-option <server-specific>
+                          option to transmit
+    -4, --ipv4            use IPv4 addresses only
+    -6, --ipv6            use IPv6 addresses only
+
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git fetch
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git push origin jihuns_test --force-with-lease
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 276 bytes | 92.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/HoeYeon/gyls.git
+ + ef3a11c8...78f60ff8 jihuns_test -> jihuns_test (forced update)
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
+$ git fetch
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 1), reused 2 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/HoeYeon/gyls
+   f47f1557..2fbe6b77  real_test  -> origin/real_test
+
+jihun@DESKTOP-8J0FPK9 MINGW64 ~/Desktop/github/gyls (jihuns_test)
