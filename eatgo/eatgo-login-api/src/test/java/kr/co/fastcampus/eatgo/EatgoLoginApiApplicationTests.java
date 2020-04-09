@@ -11,7 +11,8 @@ class EatgoLoginApiApplicationTests {
 
     @Test
     void contextLoads() {
-        //TODO: junit test , context error
+//        junit test , context error
+//        not now  why?
     }
 
 }

@@ -39,5 +39,4 @@ public class JwtUtil {
 
         return claims;
     }
-    //test configuration
 }
