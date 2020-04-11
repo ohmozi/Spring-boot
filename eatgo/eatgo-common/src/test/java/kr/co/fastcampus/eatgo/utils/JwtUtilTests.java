@@ -22,7 +22,7 @@ class JwtUtilTests {
     @Test
     public void createToken(){
 
-        String token = jwtUtil.createToken(1004L, "John", null );       // 유저Id와 사용자 이름 두가지를 넣기로함
+        String token = jwtUtil.createToken(1004L, "Jihun", null );       // 유저Id와 사용자 이름 두가지를 넣기로함
 
         assertThat(token, containsString("."));
     }
