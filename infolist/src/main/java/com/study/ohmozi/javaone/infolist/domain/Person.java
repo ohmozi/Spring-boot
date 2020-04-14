@@ -6,18 +6,22 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
-@Setter
-@Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Data
+@Builder
+/*
+getter
+setter
+tostring
+equalsandhashcode
+를 포함하는 어노테이션 @Data
+ */
 public class Person {
 
     @Id
@@ -32,6 +36,7 @@ public class Person {
 
     private String hoby;
 
+    @NonNull
     private String bloodType;
 
     private String address;
@@ -43,6 +48,9 @@ public class Person {
     @ToString.Exclude
     private String phoneNumber;
 
+    @OneToOne
+    private Block block;
+    /*
     @Override
     public boolean equals(Object o) {           // 객체가 다르면 equals가 false가 나오는데 내용이 같고 객체가 다르더라도 true가 나오도록
         if (this == o) return true;
@@ -58,5 +66,14 @@ public class Person {
                 Objects.equals(job, person.job) &&
                 Objects.equals(phoneNumber, person.phoneNumber);
     }
+    public int hashCode(){      //hashcode를 오버라이딩해서 사용하면
+        //person1과 person2가 같음을 읽을 수 있다.
+        //DB에서 동일한 객체를 가져오기 위해서는 반드시 동일한 해시코드를 사용해주어야한다
+        return (name+age).hashCode();
+    }
+    */
+    //equals와 hashcode의 중요성 이런식으로 구현하면 변수의 변경에 따라 구현이 누락될수있다.
+    //setter getter차이 처럼
+
 
 }
