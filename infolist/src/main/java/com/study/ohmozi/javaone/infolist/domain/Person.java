@@ -3,10 +3,7 @@ package com.study.ohmozi.javaone.infolist.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -48,7 +45,10 @@ public class Person {
     @ToString.Exclude
     private String phoneNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    // orphanRemoval : 아래 속해있는것도 삭제가능해짐
+    // fetch : Lazy  : left join or right join이 아닌 select문이 나눠서 실행됨
     private Block block;
     /*
     @Override
