@@ -1,10 +1,11 @@
 package com.study.ohmozi.javaone.infolist.domain;
 
 
+import com.study.ohmozi.javaone.infolist.domain.dto.Birthday;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.Valid;
 
 @Entity
 @NoArgsConstructor
@@ -38,7 +39,9 @@ public class Person {
 
     private String address;
 
-    private LocalDate birthday;
+    @Valid
+    @Embedded
+    private Birthday birthday;
 
     private String job;
 

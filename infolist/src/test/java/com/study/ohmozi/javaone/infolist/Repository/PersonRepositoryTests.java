@@ -1,6 +1,7 @@
 package com.study.ohmozi.javaone.infolist.Repository;
 
 import com.study.ohmozi.javaone.infolist.domain.Person;
+import com.study.ohmozi.javaone.infolist.domain.dto.Birthday;
 import com.study.ohmozi.javaone.infolist.service.PersonService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ class PersonRepositoryTests {
         Person person = new Person();
         person.setName("Evan");
         person.setAge(21);
+        person.setBloodType("A");
 
         personRepository.save(person);
 
@@ -66,7 +68,11 @@ class PersonRepositoryTests {
         givenPerson("e", 8, "B", LocalDate.of(2006,3,31));
 
 
-        List<Person> result = personService.getPeopleByBirthdayBetween(LocalDate.of(2010, 10,8), LocalDate.of(2020,12,15));
+
+//        List<Person> result = personService.getPeopleByBirthdayMonth(3);
+//        해달 월 생일자 찾기
+        List<Person> result = personService.getPeopleByBirthdayMonthAndDay(3, 31);
+//        해달 월,일 생일자 찾기
 
         result.forEach(System.out::println);
     }
@@ -78,7 +84,7 @@ class PersonRepositoryTests {
 
     public void givenPerson(String name, int age, String bloodType, LocalDate birthday){
         Person person = new Person(name, age, bloodType);
-        person.setBirthday(birthday);
+        person.setBirthday(new Birthday(birthday));
 
         personRepository.save(person);
     }

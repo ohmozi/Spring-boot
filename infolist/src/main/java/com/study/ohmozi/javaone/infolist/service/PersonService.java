@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -61,7 +60,11 @@ public class PersonService {
         return personRepository.findByBloodType(bloodType);
     }
 
-    public List<Person> getPeopleByBirthdayBetween(LocalDate startDate, LocalDate endDate) {
-        return personRepository.findByBirthdayBetween(startDate, endDate);
+    public List<Person> getPeopleByBirthdayMonthAndDay(int monthOfBirthday, int dayOfBirthday) {
+        return personRepository.findByMonthAndDayOfBirthday(monthOfBirthday, dayOfBirthday);
+    }
+
+    public List<Person> getPeopleByBirthdayMonth(int monthOfBirthday) {
+        return personRepository.findByMonthOfBirthday(monthOfBirthday);
     }
 }
