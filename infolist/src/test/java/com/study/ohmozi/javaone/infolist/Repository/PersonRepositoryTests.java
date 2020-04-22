@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,8 +30,7 @@ class PersonRepositoryTests {
 
         personRepository.save(person);
 
-        System.out.println(personRepository.findAll());
-        List<Person> people = personRepository.findAll();
+        List<Person> people = personRepository.findByName("Evan");      //evan이름을 찾아서 테스트 진행
 
         assertThat(people.size()).isEqualTo(1);
         assertThat(people.get(0).getName()).isEqualTo("Evan");
@@ -41,40 +38,43 @@ class PersonRepositoryTests {
 
     }
 
+//    @Test
+//    public void hashCodeEquals(){
+//
+//        Person person1 = new Person("evan", 21,"A");
+//        Person person2 = new Person("evan", 21,"A");
+//
+//        System.out.println(person1.equals(person2));
+//        System.out.println(person1.hashCode());
+//        System.out.println(person2.hashCode());
+//
+//        Map<Person, Integer> map = new HashMap<>();
+//        map.put(person1, person1.getAge());
+//
+//        System.out.println(map);
+//        System.out.println(map.get(person2));
+//    }
+
     @Test
-    public void hashCodeEquals(){
+    void findByBloodType(){
+        List<Person> people = personRepository.findByBloodType("A");
 
-        Person person1 = new Person("evan", 21,"A");
-        Person person2 = new Person("evan", 21,"A");
-
-        System.out.println(person1.equals(person2));
-        System.out.println(person1.hashCode());
-        System.out.println(person2.hashCode());
-
-        Map<Person, Integer> map = new HashMap<>();
-        map.put(person1, person1.getAge());
-
-        System.out.println(map);
-        System.out.println(map.get(person2));
+        assertThat(people.size()).isEqualTo(2);
+        assertThat(people.get(0).getName()).isEqualTo("jihun");
+        assertThat(people.get(1).getName()).isEqualTo("a");
     }
-
 
     @Test
     void getPeopleByBirthdayBetween(){
-        givenPerson("a", 6, "A", LocalDate.of(2015,12,3));
-        givenPerson("b", 10, "B", LocalDate.of(2013,7,2));
-        givenPerson("c", 11, "O", LocalDate.of(2008,2,18));
-        givenPerson("d", 5, "AB", LocalDate.of(2012,9,24));
-        givenPerson("e", 8, "B", LocalDate.of(2006,3,31));
-
-
-
-//        List<Person> result = personService.getPeopleByBirthdayMonth(3);
+        List<Person> result = personRepository.findByMonthOfBirthday(3);
 //        해달 월 생일자 찾기
-        List<Person> result = personService.getPeopleByBirthdayMonthAndDay(3, 31);
+//        List<Person> result = personService.getPeopleByBirthdayMonthAndDay(3, 6);
 //        해달 월,일 생일자 찾기
 
-        result.forEach(System.out::println);
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getName()).isEqualTo("c");
+        assertThat(result.get(1).getName()).isEqualTo("d");
+//        result.forEach(System.out::println);
     }
 
     //method overiding

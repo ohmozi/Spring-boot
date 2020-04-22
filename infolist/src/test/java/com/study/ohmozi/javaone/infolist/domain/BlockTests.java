@@ -30,8 +30,8 @@ class BlockTests {
 
         List<Block> blockList = blockRepository.findAll();
 
-        assertThat(blockList.size()).isEqualTo(1);
-        assertThat(blockList.get(0).getName()).isEqualTo("ohmozi");
+        assertThat(blockList.size()).isEqualTo(3);      //단위테스트로 하면 통과하지만 전체 테스트로하면 sql문과 new block이 생성되서 3개가
+        assertThat(blockList.get(2).getName()).isEqualTo("ohmozi");
 
     }
 }

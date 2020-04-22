@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class PersonServiceTests {
@@ -23,7 +24,6 @@ class PersonServiceTests {
 
     @Test
     void getPeopleExcludeBlocks(){
-        givenPeople();
 
         List<Person> result = personService.getPeopleExcludeBlocks();
 
@@ -33,57 +33,51 @@ class PersonServiceTests {
 
     @Test
     void getPeopleByName(){
-        givenPeople();
 
-        List<Person> result = personService.getPeopleByName("Evan");
-
-        result.forEach(System.out::println);
+        List<Person> result = personService.getPeopleByName("b");
+        assertThat(result.size()).isEqualTo(1);
     }
+
 
     @Test
     void getPeopleByBloodType(){
-        givenPeople();
-
         List<Person> result = personService.getPeopleByBloodType("A");
-
-        result.forEach(System.out::println);
+        assertThat(result.get(0).getName()).isEqualTo("jihun");
     }
 
 
     @Test
     void getPerson(){
-        givenPeople();
-
         Person person = personService.getPerson(3L);
-
-        System.out.println(person);
+        assertThat(person.getName()).isEqualTo("b");
     }
 
-    @Test
-    void cascadeTest(){
-        givenPeople();
-
-        List<Person> result = personRepository.findAll();
-
-        result.forEach(System.out::println);
-
-        Person person = result.get(3);
-        person.getBlock().setStartDate(LocalDate.now());
-        person.getBlock().setEndDate(LocalDate.now());
-
-        personRepository.save(person);
-        personRepository.findAll().forEach(System.out::println);
-
-//        personRepository.delete(person);
+    //cascade의 형식을 보여주기 위한 테스트이므로 제외
+//    @Test
+//    void cascadeTest(){
+//        givenPeople();
+//
+//        List<Person> result = personRepository.findAll();
+//
+//        result.forEach(System.out::println);
+//
+//        Person person = result.get(3);
+//        person.getBlock().setStartDate(LocalDate.now());
+//        person.getBlock().setEndDate(LocalDate.now());
+//
+//        personRepository.save(person);
+//        personRepository.findAll().forEach(System.out::println);
+//
+////        personRepository.delete(person);
+////        personRepository.findAll().forEach(System.out::println);
+////        blockRepository.findAll().forEach(System.out::println);
+//
+//        person.setBlock(null);
+//        personRepository.save(person);
 //        personRepository.findAll().forEach(System.out::println);
 //        blockRepository.findAll().forEach(System.out::println);
-
-        person.setBlock(null);
-        personRepository.save(person);
-        personRepository.findAll().forEach(System.out::println);
-        blockRepository.findAll().forEach(System.out::println);
-
-    }
+//
+//    }
 
     private void givenPeople() {
         givenPerson("ohmozi", 21, "A");

@@ -23,7 +23,7 @@ equalsandhashcode
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)     //생성되는 id값이 충돌하지 않도록 선언
     private Long id;
 
     @NonNull            //@NotNull과 혼동하지 않기  ( @RequiredArgsConstructor )

@@ -42,7 +42,8 @@ public class PersonService {
 
     @Transactional(readOnly = true)
     public Person getPerson(Long id){
-        Person person = personRepository.findById(id).get();
+//        Person person = personRepository.findById(id).get();
+        Person person = personRepository.findById(id).orElse(null);     //get을 하는데 없으면 null 리턴. 예외처리가능
 
         log.info("person : {}", person);
 
