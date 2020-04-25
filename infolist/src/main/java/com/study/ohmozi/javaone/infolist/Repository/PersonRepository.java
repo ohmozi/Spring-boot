@@ -15,9 +15,9 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     List<Person> findByName(String name);
 
-    List<Person> findByBlockIsNull();
+//    List<Person> findByBlockIsNull();
 
-    List<Person> findByBloodType(String bloodType);
+//    List<Person> findByBloodType(String bloodType);
 
     @Query(value = "select person from Person person where person.birthday.monthOfBirthday = ?1")
     List<Person> findByMonthOfBirthday(int monthOfBirthday);
@@ -33,5 +33,6 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     List<Person> findByMonthAndDayOfBirthday(@Param("monthOfBirthday") int monthOfBirthday, @Param("dayOfBirthday") int dayOfBirthday);
     //방법 : 파라미터 네이밍으로 사용하기
 
-
+    @Query(value = "select * from Person person where person.deleted = true", nativeQuery = true)
+    List<Person> findPeopleDeleted();
 }

@@ -1,13 +1,15 @@
 package com.study.ohmozi.javaone.infolist.service;
 
-import com.study.ohmozi.javaone.infolist.Repository.BlockRepository;
 import com.study.ohmozi.javaone.infolist.Repository.PersonRepository;
+import com.study.ohmozi.javaone.infolist.controller.dto.PersonDto;
 import com.study.ohmozi.javaone.infolist.domain.Person;
+import com.study.ohmozi.javaone.infolist.domain.dto.Birthday;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -17,10 +19,7 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    @Autowired
-    private BlockRepository blockRepository;
-
-    public List<Person> getPeopleExcludeBlocks(){
+//      public List<Person> getPeopleExcludeBlocks(){
 
 //        relation 추가후 findall하고 걸러내는 과정
 //        List<Person> people = personRepository.findAll();
@@ -37,17 +36,22 @@ public class PersonService {
 
 //        stream과 filter로 구현해도 되지만 쿼리측면과 자원측면에서 먼저 쿼리문으로 처리해주면 더 좋음
 
-        return personRepository.findByBlockIsNull();
-    }
+//        return personRepository.findByBlockIsNull();
+//    }
 
     @Transactional(readOnly = true)
     public Person getPerson(Long id){
 //        Person person = personRepository.findById(id).get();
-        Person person = personRepository.findById(id).orElse(null);     //get을 하는데 없으면 null 리턴. 예외처리가능
+        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 아이디가 존재하지않습니다"));     //get을 하는데 없으면 null 리턴. 예외처리가능
 
         log.info("person : {}", person);
 
         return person;
+    }
+
+    @Transactional
+    public void put(Person person){
+        personRepository.save(person);
     }
 
     public List<Person> getPeopleByName(String name) {
@@ -57,9 +61,9 @@ public class PersonService {
         return personRepository.findByName(name);
     }
 
-    public List<Person> getPeopleByBloodType(String bloodType){
-        return personRepository.findByBloodType(bloodType);
-    }
+//    public List<Person> getPeopleByBloodType(String bloodType){
+//        return personRepository.findByBloodType(bloodType);
+//    }
 
     public List<Person> getPeopleByBirthdayMonthAndDay(int monthOfBirthday, int dayOfBirthday) {
         return personRepository.findByMonthAndDayOfBirthday(monthOfBirthday, dayOfBirthday);
@@ -67,5 +71,29 @@ public class PersonService {
 
     public List<Person> getPeopleByBirthdayMonth(int monthOfBirthday) {
         return personRepository.findByMonthOfBirthday(monthOfBirthday);
+    }
+
+    @Transactional
+    public void modify(Long id, @Valid PersonDto personDto) {
+        Person personAtDb = personRepository.findById(id).orElseThrow(()-> new RuntimeException("아이디가 존재하지 않습니다"));
+
+        personAtDb.setName(personDto.getName());
+//        personAtDb.setBloodType(personDto.getBloodType());
+        if ( personDto.getBirthday() != null){
+            personAtDb.setBirthday(Birthday.of(personDto.getBirthday()));
+        }
+
+        personRepository.save(personAtDb);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
+
+        person.setDeleted(true);
+
+        personRepository.save(person);
+//      사실 그냥 지우는 법은 없음.  잘못 들어왔을때 지워버리면 복구방법이 없다.
+//        personRepository.deleteById(id);      //이렇게 그냥 지워도됨
     }
 }
