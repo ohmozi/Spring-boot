@@ -82,6 +82,7 @@ public class PersonService {
         if ( personDto.getBirthday() != null){
             personAtDb.setBirthday(Birthday.of(personDto.getBirthday()));
         }
+        personAtDb.setAddress((personDto.getAddress()));
 
         personRepository.save(personAtDb);
     }
