@@ -70,7 +70,7 @@ class PersonControllerTests {
                 // SerializationFeature 추가 후
                 // "birthday":"1991-08-15"
 
-                // 근데 저번 테스트처럼 몇월 생일자인지 확인하려면 시리얼라이즈를 하면 안되는거아닌가? 
+                // 근데 저번 테스트처럼 몇월 생일자인지 확인하려면 시리얼라이즈를 하면 안되는거아닌가?
                 .andExpect(content().string(
                         containsString("\"name\":\"jihun\"")
                 ));

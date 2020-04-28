@@ -36,7 +36,7 @@ public class Person {
     @Column(nullable = false)
     private String name;
 
-    private String hoby;
+    private String hobby;
 
 //    @NonNull
 //    @NotEmpty

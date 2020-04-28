@@ -33,6 +33,12 @@ public class PersonController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void postPerson(@Valid @RequestBody Person person){
+//        PersonDto personDto = PersonDto.builder()
+//                .name(person.getName())
+//                .address(person.getAddress())
+//                .hobby(person.getHobby())
+//                .build();           // 생성자 늘리기
+
         personService.put(person);
 
         log.info("person -> {}", personRepository.findAll());

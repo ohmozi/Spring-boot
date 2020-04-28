@@ -34,5 +34,6 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     //방법 : 파라미터 네이밍으로 사용하기
 
     @Query(value = "select * from Person person where person.deleted = true", nativeQuery = true)
+    // nativequery로써 h2에서 읽지않는 쿼리(where절로 처리한)를 가져올수있게한다.
     List<Person> findPeopleDeleted();
 }

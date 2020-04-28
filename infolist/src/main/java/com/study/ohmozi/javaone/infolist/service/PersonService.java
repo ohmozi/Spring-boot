@@ -42,7 +42,7 @@ public class PersonService {
     @Transactional(readOnly = true)
     public Person getPerson(Long id){
 //        Person person = personRepository.findById(id).get();
-        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 아이디가 존재하지않습니다"));     //get을 하는데 없으면 null 리턴. 예외처리가능
+        Person person = personRepository.findById(id).orElse(null);     //get을 하는데 없으면 null 리턴. 예외처리가능
 
         log.info("person : {}", person);
 
