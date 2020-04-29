@@ -4,6 +4,7 @@ import com.study.ohmozi.javaone.infolist.Repository.PersonRepository;
 import com.study.ohmozi.javaone.infolist.controller.dto.PersonDto;
 import com.study.ohmozi.javaone.infolist.domain.Person;
 import com.study.ohmozi.javaone.infolist.domain.dto.Birthday;
+import com.study.ohmozi.javaone.infolist.domain.exception.PersonNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,14 +76,15 @@ public class PersonService {
 
     @Transactional
     public void modify(Long id, @Valid PersonDto personDto) {
-        Person personAtDb = personRepository.findById(id).orElseThrow(()-> new RuntimeException("아이디가 존재하지 않습니다"));
+
+        Person personAtDb = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);        // 람다식으로 변경한건데 이해가 잘안됨..
 
         personAtDb.setName(personDto.getName());
-//        personAtDb.setBloodType(personDto.getBloodType());
-        if ( personDto.getBirthday() != null){
+        personAtDb.setHobby(personDto.getHobby());
+        personAtDb.setAddress((personDto.getAddress()));
+        if ( personDto.getBirthday() != null){          // 생일 객체가 null일수도 있으므로
             personAtDb.setBirthday(Birthday.of(personDto.getBirthday()));
         }
-        personAtDb.setAddress((personDto.getAddress()));
 
         personRepository.save(personAtDb);
     }

@@ -7,6 +7,7 @@ import com.study.ohmozi.javaone.infolist.domain.dto.Birthday;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,7 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-//@SpringBootTest     // 기존에 data.sql에서 db를 조회해서 테스트한 것과 달리 mock객체를 만들어 각 모듈별로 테스트한다.
+//@SpringBootTest
+// 기존에 data.sql에서 db를 조회해서 테스트한 것과 달리 mock객체를 만들어 각 모듈별로 테스트한다.
+// 테스트 속도측면에서 mock 테스트는 매우 빠르다
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTests {
 
@@ -108,11 +111,35 @@ class PersonServiceTests {
 
         personService.modify(1L, mockPersonDto());
 
-        verify(personRepository, times(1)).save(any(Person.class));
+//        verify(personRepository, times(1)).save(any(Person.class));
+        // save만 했는지 확인하는 과정인데  실제 맞는 값이 저장되었는지를 확인해줘야 로직상에서 문제가없음
+        verify(personRepository, times(1)).save(argThat(new IsPersonWillBeUpdated()));
+        // save를 확인할 것인데, 어떠한 내용이던지 person class이면 괜찮다가 아니라. save할건데 args가 이런정보를 만족해야한다.
+
 
     }
 
+    @Test
+    public void deleteIfPersonNotFound(){
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.empty());
 
+        assertThrows(RuntimeException.class, () -> personService.delete(1L));
+
+
+    }
+
+    @Test
+    public void delete(){
+        when(personRepository.findById(1L))
+                .thenReturn(Optional.of(new Person("evan")));
+
+        personService.delete(1L);
+
+        verify(personRepository, times(1)).save(argThat(new IsPersonWillBeDeleted()));
+        // save인 이유 : flag를 사용해 soft delete를 하기 때문이다.
+        // any(person.class)를 사용하지 않는 이유는 삭제만 ㄷ확인하고 제대로 삭제되는 로직이 맞는지 확인하기 위해 argThat을 사용
+    }
     private PersonDto mockPersonDto() {
         return PersonDto.builder()
                 .name("evan")
@@ -123,6 +150,32 @@ class PersonServiceTests {
                 .phoneNumber("010-222-5461")
                 .build();
     }
+
+    private static class IsPersonWillBeUpdated implements ArgumentMatcher<Person> {
+
+        @Override
+        public boolean matches(Person person) {
+            return equals(person.getName(), "evan")
+                    && equals(person.getHobby(),"programming")
+                    && equals(person.getAddress(), "seoul")
+                    && equals(person.getBirthday(), Birthday.of(LocalDate.now()));
+            // 각 변수들은 하드코딩되어있는데 이를 동적으로 뽑아내어 리팩토링해도되고 / 변수를 더 늘려도된다.
+        }
+
+        private boolean equals(Object actual, Object expected){
+            return expected.equals(actual);
+        }
+    }
+
+    private static class IsPersonWillBeDeleted implements ArgumentMatcher<Person> {
+
+        @Override
+        public boolean matches(Person person) {
+            return person.isDeleted();
+            // 각 변수들은 하드코딩되어있는데 이를 동적으로 뽑아내어 리팩토링해도되고 / 변수를 더 늘려도된다.
+        }
+    }
+
 //    @Test
 //    void getPerson(){
 //        Person person = personService.getPerson(3L);
