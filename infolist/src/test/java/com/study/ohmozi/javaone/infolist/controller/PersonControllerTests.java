@@ -46,7 +46,11 @@ class PersonControllerTests {
     //mock 설정의 반복을 한번에 셋팅
     @BeforeEach     //이 메소드는 매 테스트마다 실행
     void beforeEach(){
-        mockMvc = MockMvcBuilders.standaloneSetup(personController).setMessageConverters(mappingJackson2HttpMessageConverter).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(personController)
+                .setMessageConverters(mappingJackson2HttpMessageConverter)
+                .alwaysDo(print())      // 항상 테스트하고 프린트하기
+                .build();
         //  시리얼라이즈 모듈을 테스트 파트에 추가하기 위해 변경
     }
     @Test
@@ -54,7 +58,6 @@ class PersonControllerTests {
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/person/1"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("jihun"))   // 리턴되는 어트리뷰트에서 name값을 확인한다.
                 .andExpect(jsonPath("$.birthday").value("1991-08-15"))
@@ -109,7 +112,6 @@ class PersonControllerTests {
 //                        .content("{\n" +
 //                                "    \"name\": \"BobModify\"\n" +
 //                                "}"))
-                        .andDo(print())
                         .andExpect(status().isOk());
 
         assertAll(
@@ -120,11 +122,31 @@ class PersonControllerTests {
     }
 
     @Test
+    public void modifyPersonIfPersonNotFound() throws Exception {
+        PersonDto dto = PersonDto.builder()
+                .name("james")
+                .hobby("programming")
+                .address("seoul")
+                .birthday(LocalDate.now())
+                .job("programmer")
+                .phoneNumber("010-2399-2546")
+                .build();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/api/person/10")        //없는데이터로 없는사람 확인
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toJsonString(dto)))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.code").value(400))
+                    .andExpect(jsonPath("$.message").value("Person Entity is undefined"));
+
+    }
+
+    @Test
     public void deletePerson() throws Exception {
 
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/api/person/4"))
-                .andDo(print())
                 .andExpect(status().isOk());
 
         assertTrue(personRepository.findPeopleDeleted().stream().anyMatch(person -> person.getId().equals(4L)));
