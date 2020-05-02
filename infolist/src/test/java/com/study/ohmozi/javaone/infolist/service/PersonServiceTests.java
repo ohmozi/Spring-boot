@@ -11,6 +11,10 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,6 +61,21 @@ class PersonServiceTests {
     }
 
     @Test
+    public void getAll() throws Exception {
+
+        when(personRepository.findAll(any(Pageable.class)))
+                .thenReturn(new PageImpl<>(Lists.newArrayList(new Person("martin"), new Person("evan"), new Person("juju"), new Person("hyewon"))));
+
+        Page<Person> result = personService.getAll(PageRequest.of(0,3));     // Pageable은 interface고 그것을 구현해놓은게 pagerequest
+
+        assertThat(result.getNumberOfElements()).isEqualTo(4);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("martin");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("evan");
+        assertThat(result.getContent().get(2).getName()).isEqualTo("juju");
+        assertThat(result.getContent().get(3).getName()).isEqualTo("hyewon");
+    }
+
+    @Test
     public void getPerson(){
         when(personRepository.findById(1L))
                 .thenReturn(java.util.Optional.of(new Person("evan")));
@@ -80,16 +99,16 @@ class PersonServiceTests {
 
     @Test
     public void put(){
-        Person person = Person.builder()
+        PersonDto persondto = PersonDto.builder()
                 .name("evan")
                 .hobby("programming")
                 .address("seoul")
-                .birthday(Birthday.of(LocalDate.now()))
+                .birthday(LocalDate.now())
                 .job("student")
                 .phoneNumber("010-222-5461")
                 .build();
 
-        personService.put(person);
+        personService.put(persondto);
 
         verify(personRepository, times(1)).save(any(Person.class));
 

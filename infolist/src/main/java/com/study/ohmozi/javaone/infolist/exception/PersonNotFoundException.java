@@ -1,4 +1,4 @@
-package com.study.ohmozi.javaone.infolist.domain.exception;
+package com.study.ohmozi.javaone.infolist.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

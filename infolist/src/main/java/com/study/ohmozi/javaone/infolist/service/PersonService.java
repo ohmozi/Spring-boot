@@ -4,9 +4,11 @@ import com.study.ohmozi.javaone.infolist.Repository.PersonRepository;
 import com.study.ohmozi.javaone.infolist.controller.dto.PersonDto;
 import com.study.ohmozi.javaone.infolist.domain.Person;
 import com.study.ohmozi.javaone.infolist.domain.dto.Birthday;
-import com.study.ohmozi.javaone.infolist.domain.exception.PersonNotFoundException;
+import com.study.ohmozi.javaone.infolist.exception.PersonNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,11 @@ public class PersonService {
 //        return personRepository.findByBlockIsNull();
 //    }
 
+
+    public Page<Person> getAll(Pageable pageable) {     // springframwork의 pageable
+        return personRepository.findAll(pageable);
+    }
+
     @Transactional(readOnly = true)
     public Person getPerson(Long id){
 //        Person person = personRepository.findById(id).get();
@@ -51,7 +58,11 @@ public class PersonService {
     }
 
     @Transactional
-    public void put(Person person){
+    public void put(PersonDto personDto){
+        Person person = new Person();
+        person.set(personDto);
+        person.setName(personDto.getName());
+
         personRepository.save(person);
     }
 
@@ -99,4 +110,5 @@ public class PersonService {
 //      사실 그냥 지우는 법은 없음.  잘못 들어왔을때 지워버리면 복구방법이 없다.
 //        personRepository.deleteById(id);      //이렇게 그냥 지워도됨
     }
+
 }

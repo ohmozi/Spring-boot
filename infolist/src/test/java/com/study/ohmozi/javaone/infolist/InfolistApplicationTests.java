@@ -39,7 +39,7 @@ class InfolistApplicationTests {
 		mvc = MockMvcBuilders.standaloneSetup(helloController).build();
 
 		mvc.perform(
-				MockMvcRequestBuilders.get("/index"))
+				MockMvcRequestBuilders.get("/api/helloWorld"))
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().string("Hello world!"));

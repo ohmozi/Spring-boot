@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Data
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PersonDto {
 
+    @NotBlank(message = "Name is not be null")
     private String name;
 
     private String hobby;

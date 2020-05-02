@@ -1,6 +1,9 @@
 package com.study.ohmozi.javaone.infolist.Repository;
 
+import com.study.ohmozi.javaone.infolist.controller.dto.PersonDto;
 import com.study.ohmozi.javaone.infolist.domain.Person;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -9,9 +12,11 @@ import java.util.List;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
-    List<Person> findAll();
 
-    Person save(Person person);
+    Page<Person> findAll(Pageable pageable);
+//    List<Person> findAll();
+
+    Person save(PersonDto persondto);
 
     List<Person> findByName(String name);
 
@@ -36,4 +41,5 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     @Query(value = "select * from Person person where person.deleted = true", nativeQuery = true)
     // nativequery로써 h2에서 읽지않는 쿼리(where절로 처리한)를 가져올수있게한다.
     List<Person> findPeopleDeleted();
+
 }
